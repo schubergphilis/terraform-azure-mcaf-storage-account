@@ -50,7 +50,6 @@ No modules.
 | <a name="input_cmk_key_name"></a> [cmk\_key\_name](#input\_cmk\_key\_name) | The name of the Key (within the cmk\_key\_vault) to use as the Customer Managed Key | `string` | `null` | no |
 | <a name="input_cmk_key_vault_id"></a> [cmk\_key\_vault\_id](#input\_cmk\_key\_vault\_id) | The ID of the Key Vault to use for the Customer Managed Key | `string` | `null` | no |
 | <a name="input_container_delete_retention_days"></a> [container\_delete\_retention\_days](#input\_container\_delete\_retention\_days) | The number of days to retain deleted containers for. Defaults to 90. | `number` | `90` | no |
-| <a name="input_container_delete_retention_policy"></a> [container\_delete\_retention\_policy](#input\_container\_delete\_retention\_policy) | Specifies the number of days that the container should be retained | `number` | `90` | no |
 | <a name="input_contributors"></a> [contributors](#input\_contributors) | List of principal IDs that are allowed to be contributor on this storage account. Defaults to an empty list. | `list(string)` | `[]` | no |
 | <a name="input_default_to_oauth_authentication"></a> [default\_to\_oauth\_authentication](#input\_default\_to\_oauth\_authentication) | Allow or disallow defaulting to OAuth authentication for this storage account. Defaults to true. | `bool` | `true` | no |
 | <a name="input_https_traffic_only_enabled"></a> [https\_traffic\_only\_enabled](#input\_https\_traffic\_only\_enabled) | Allow or disallow only HTTPS traffic to this storage account. Defaults to true. | `bool` | `true` | no |
@@ -68,7 +67,11 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_endpoints"></a> [endpoints](#output\_endpoints) | Endpoint information of the storage account |
+| <a name="output_id"></a> [id](#output\_id) | Resource Id of the storage account |
+| <a name="output_name"></a> [name](#output\_name) | Name of the storage account |
 <!-- END_TF_DOCS -->
 
 ## License
