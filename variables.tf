@@ -135,12 +135,6 @@ variable "change_feed_enabled" {
   description = "Is the blob service properties for change feed events enabled?"
 }
 
-variable "container_delete_retention_policy" {
-  type        = number
-  default     = 90
-  description = "Specifies the number of days that the container should be retained"
-}
-
 variable "storage_containers" {
   type = map(object({
     access_type = optional(string, "private")
