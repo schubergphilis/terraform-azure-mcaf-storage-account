@@ -30,7 +30,7 @@ resource "azurerm_storage_account" "this" {
   }
 
   dynamic "identity" {
-    for_each = var.identity ? [true] : []
+    for_each = var.managed_identity_enabled ? [true] : []
 
     content {
       type = "SystemAssigned"

@@ -81,7 +81,7 @@ variable "sftp_enabled" {
   description = "Allow or disallow SFTP access to this storage account. Defaults to false."
 }
 
-variable "identity" {
+variable "managed_identity_enabled" {
   type        = bool
   default     = true
   description = "Enable or disable the system-assigned managed identity for this storage account. Defaults to true."
