@@ -1,3 +1,7 @@
+terraform {
+  required_version = ">= 1.7"
+}
+
 module "storage_account" {
   source = "../.."
 
