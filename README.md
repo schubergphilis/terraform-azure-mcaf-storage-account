@@ -39,7 +39,6 @@ No modules.
 | <a name="input_location"></a> [location](#input\_location) | Location of the Storage account | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | The name of the Storage Account | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name of the resource group to Create the Storage account in | `string` | n/a | yes |
-| <a name="input_storage_containers"></a> [storage\_containers](#input\_storage\_containers) | Map of Storage Containers to Create and whether the container should be publically accessible, defaults to private | <pre>map(object({<br>    access_type = optional(string, "private")<br>  }))</pre> | n/a | yes |
 | <a name="input_access_tier"></a> [access\_tier](#input\_access\_tier) | The access tier for the storage account. Valid options are Hot and Cool. Defaults to Hot. | `string` | `"Hot"` | no |
 | <a name="input_account_kind"></a> [account\_kind](#input\_account\_kind) | The Kind of account to create. Valid options are Storage, StorageV2, BlobStorage, FileStorage, BlockBlobStorage, and StorageV2. Defaults to StorageV2. | `string` | `"StorageV2"` | no |
 | <a name="input_account_replication_type"></a> [account\_replication\_type](#input\_account\_replication\_type) | The type of replication to use for this storage account. Valid options are LRS, GRS, RAGRS, ZRS, GZRS, and RA\_GZRS. Defaults to GRS. | `string` | `"LRS"` | no |
@@ -61,6 +60,7 @@ No modules.
 | <a name="input_public_network_access_enabled"></a> [public\_network\_access\_enabled](#input\_public\_network\_access\_enabled) | Allow or disallow public network access to this storage account. Defaults to false. | `bool` | `false` | no |
 | <a name="input_sftp_enabled"></a> [sftp\_enabled](#input\_sftp\_enabled) | Allow or disallow SFTP access to this storage account. Defaults to false. | `bool` | `false` | no |
 | <a name="input_shared_access_key_enabled"></a> [shared\_access\_key\_enabled](#input\_shared\_access\_key\_enabled) | Allow or disallow shared access keys for this storage account. Defaults to false. | `bool` | `false` | no |
+| <a name="input_storage_containers"></a> [storage\_containers](#input\_storage\_containers) | Map of Storage Containers to Create and whether the container should be publically accessible, defaults to private | <pre>map(object({<br>    access_type = optional(string, "private")<br>  }))</pre> | `{}` | no |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | A list of subnet IDs that are allowed to access this storage account. Defaults to an empty list. | `list(string)` | `[]` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to assign to the resource. | `map(string)` | `{}` | no |
 | <a name="input_versioning_enabled"></a> [versioning\_enabled](#input\_versioning\_enabled) | Is versioning enabled? | `bool` | `true` | no |
