@@ -81,7 +81,7 @@ variable "sftp_enabled" {
   description = "Allow or disallow SFTP access to this storage account. Defaults to false."
 }
 
-variable "identity" {
+variable "managed_identity_enabled" {
   type        = bool
   default     = true
   description = "Enable or disable the system-assigned managed identity for this storage account. Defaults to true."
@@ -133,12 +133,6 @@ variable "change_feed_enabled" {
   type        = bool
   default     = true
   description = "Is the blob service properties for change feed events enabled?"
-}
-
-variable "container_delete_retention_policy" {
-  type        = number
-  default     = 90
-  description = "Specifies the number of days that the container should be retained"
 }
 
 variable "storage_containers" {

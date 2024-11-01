@@ -50,13 +50,12 @@ No modules.
 | <a name="input_cmk_key_name"></a> [cmk\_key\_name](#input\_cmk\_key\_name) | The name of the Key (within the cmk\_key\_vault) to use as the Customer Managed Key | `string` | `null` | no |
 | <a name="input_cmk_key_vault_id"></a> [cmk\_key\_vault\_id](#input\_cmk\_key\_vault\_id) | The ID of the Key Vault to use for the Customer Managed Key | `string` | `null` | no |
 | <a name="input_container_delete_retention_days"></a> [container\_delete\_retention\_days](#input\_container\_delete\_retention\_days) | The number of days to retain deleted containers for. Defaults to 90. | `number` | `90` | no |
-| <a name="input_container_delete_retention_policy"></a> [container\_delete\_retention\_policy](#input\_container\_delete\_retention\_policy) | Specifies the number of days that the container should be retained | `number` | `90` | no |
 | <a name="input_contributors"></a> [contributors](#input\_contributors) | List of principal IDs that are allowed to be contributor on this storage account. Defaults to an empty list. | `list(string)` | `[]` | no |
 | <a name="input_default_to_oauth_authentication"></a> [default\_to\_oauth\_authentication](#input\_default\_to\_oauth\_authentication) | Allow or disallow defaulting to OAuth authentication for this storage account. Defaults to true. | `bool` | `true` | no |
 | <a name="input_https_traffic_only_enabled"></a> [https\_traffic\_only\_enabled](#input\_https\_traffic\_only\_enabled) | Allow or disallow only HTTPS traffic to this storage account. Defaults to true. | `bool` | `true` | no |
-| <a name="input_identity"></a> [identity](#input\_identity) | Enable or disable the system-assigned managed identity for this storage account. Defaults to true. | `bool` | `true` | no |
 | <a name="input_infrastructure_encryption_enabled"></a> [infrastructure\_encryption\_enabled](#input\_infrastructure\_encryption\_enabled) | Allow or disallow infrastructure encryption for this storage account. Defaults to true. | `bool` | `true` | no |
 | <a name="input_ip_rules"></a> [ip\_rules](#input\_ip\_rules) | A list of IP addresses that are allowed to access this storage account. Defaults to an empty list. | `list(string)` | `[]` | no |
+| <a name="input_managed_identity_enabled"></a> [managed\_identity\_enabled](#input\_managed\_identity\_enabled) | Enable or disable the system-assigned managed identity for this storage account. Defaults to true. | `bool` | `true` | no |
 | <a name="input_min_tls_version"></a> [min\_tls\_version](#input\_min\_tls\_version) | The minimum TLS version to allow for requests to this storage account. Valid options are TLS1\_0, TLS1\_1, and TLS1\_2. Defaults to TLS1\_2. | `string` | `"TLS1_2"` | no |
 | <a name="input_network_bypass"></a> [network\_bypass](#input\_network\_bypass) | A list of services that are allowed to bypass the network rules. Defaults to [], could be any of ["Logging", "Metrics", "AzureServices", "None"]. | `list(string)` | `[]` | no |
 | <a name="input_public_network_access_enabled"></a> [public\_network\_access\_enabled](#input\_public\_network\_access\_enabled) | Allow or disallow public network access to this storage account. Defaults to false. | `bool` | `false` | no |
@@ -68,7 +67,11 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_endpoints"></a> [endpoints](#output\_endpoints) | Endpoint information of the storage account |
+| <a name="output_id"></a> [id](#output\_id) | Resource Id of the storage account |
+| <a name="output_name"></a> [name](#output\_name) | Name of the storage account |
 <!-- END_TF_DOCS -->
 
 ## License
