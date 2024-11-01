@@ -139,6 +139,7 @@ variable "storage_containers" {
   type = map(object({
     access_type = optional(string, "private")
   }))
+  default     = {}
   description = "Map of Storage Containers to Create and whether the container should be publically accessible, defaults to private"
 }
 
