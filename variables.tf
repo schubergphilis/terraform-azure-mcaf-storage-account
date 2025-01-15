@@ -149,6 +149,12 @@ variable "contributors" {
   description = "List of principal IDs that are allowed to be contributor on this storage account. Defaults to an empty list."
 }
 
+variable "use_cmk_encryption" {
+  type        = bool
+  default     = null
+  description = "An optional variable to enable cmk encryption for tables and queues while not setting the cmk encryption"
+}
+
 variable "cmk_key_vault_id" {
   type        = string
   default     = null
