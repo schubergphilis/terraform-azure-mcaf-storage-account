@@ -63,6 +63,7 @@ No modules.
 | <a name="input_storage_containers"></a> [storage\_containers](#input\_storage\_containers) | Map of Storage Containers to Create and whether the container should be publically accessible, defaults to private | <pre>map(object({<br>    access_type = optional(string, "private")<br>  }))</pre> | `{}` | no |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | A list of subnet IDs that are allowed to access this storage account. Defaults to an empty list. | `list(string)` | `[]` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to assign to the resource. | `map(string)` | `{}` | no |
+| <a name="input_use_cmk_encryption"></a> [use\_cmk\_encryption](#input\_use\_cmk\_encryption) | An optional variable to enable cmk encryption for tables and queues while not setting the cmk encryption | `bool` | `null` | no |
 | <a name="input_versioning_enabled"></a> [versioning\_enabled](#input\_versioning\_enabled) | Is versioning enabled? | `bool` | `true` | no |
 
 ## Outputs
