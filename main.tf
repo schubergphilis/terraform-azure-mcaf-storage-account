@@ -17,8 +17,8 @@ resource "azurerm_storage_account" "this" {
   infrastructure_encryption_enabled = var.infrastructure_encryption_enabled
   sftp_enabled                      = var.sftp_enabled
   allow_nested_items_to_be_public   = var.allow_nested_items_to_be_public
-  queue_encryption_key_type         = (var.use_cmk_encryption || (local.cmk == 1 && var.use_cmk_encryption == null)) ? "Account" : "Service"
-  table_encryption_key_type         = (var.use_cmk_encryption || (local.cmk == 1 && var.use_cmk_encryption == null)) ? "Account" : "Service"
+  queue_encryption_key_type         = (var.use_cmk_encryption || local.cmk == 1) ? "Account" : "Service"
+  table_encryption_key_type         = (var.use_cmk_encryption || local.cmk == 1) ? "Account" : "Service"
 
   blob_properties {
     delete_retention_policy {

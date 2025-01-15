@@ -151,7 +151,7 @@ variable "contributors" {
 
 variable "use_cmk_encryption" {
   type        = bool
-  default     = null
+  default     = false
   description = "An optional variable to enable cmk encryption for tables and queues while not setting the cmk encryption"
 }
 
