@@ -17,8 +17,8 @@ resource "azurerm_storage_account" "this" {
   infrastructure_encryption_enabled = var.infrastructure_encryption_enabled
   sftp_enabled                      = var.sftp_enabled
   allow_nested_items_to_be_public   = var.allow_nested_items_to_be_public
-  queue_encryption_key_type         = (var.enable_cmk_encryption || local.cmk == 1) ? "Account" : "Service"
-  table_encryption_key_type         = (var.enable_cmk_encryption || local.cmk == 1) ? "Account" : "Service"
+  queue_encryption_key_type         = (var.enable_cmk_encryption || var.cmk_key_vault_id != null) ? "Account" : "Service"
+  table_encryption_key_type         = (var.enable_cmk_encryption || var.cmk_key_vault_id != null) ? "Account" : "Service"
 
   blob_properties {
     delete_retention_policy {
@@ -98,7 +98,7 @@ resource "azurerm_storage_account_customer_managed_key" "this" {
 }
 
 resource "azurerm_role_assignment" "cmk" {
-  count = (var.cmk_key_vault_id != null && local.identity_system_assigned != null) ? 1 : 0
+  count = (var.cmk_key_vault_id != null && (local.identity_system_assigned != null || local.identity_system_assigned_user_assigned != null)) ? 1 : 0
 
   scope                = var.cmk_key_vault_id
   role_definition_name = "Key Vault Crypto Service Encryption User"
