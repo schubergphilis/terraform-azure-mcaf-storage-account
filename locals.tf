@@ -1,6 +1,4 @@
 locals {
-  cmk = var.cmk_key_vault_id == null ? 0 : 1
-
   identity_system_assigned_user_assigned = (var.system_assigned_identity_enabled && (length(var.user_assigned_identities) > 0)) ? {
     this = {
       type                       = "SystemAssigned, UserAssigned"

@@ -86,7 +86,7 @@ resource "azurerm_role_assignment" "extra" {
 }
 
 resource "azurerm_storage_account_customer_managed_key" "this" {
-  count = local.cmk
+  count = var.cmk_key_vault_id != null
 
   storage_account_id = azurerm_storage_account.this.id
   key_vault_id       = var.cmk_key_vault_id
@@ -98,7 +98,7 @@ resource "azurerm_storage_account_customer_managed_key" "this" {
 }
 
 resource "azurerm_role_assignment" "cmk" {
-  count = local.cmk
+  count = (var.cmk_key_vault_id != null && local.identity_system_assigned != null) ? 1 : 0
 
   scope                = var.cmk_key_vault_id
   role_definition_name = "Key Vault Crypto Service Encryption User"
