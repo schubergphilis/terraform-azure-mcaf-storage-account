@@ -86,6 +86,12 @@ variable "system_assigned_identity_enabled" {
   description = "Enable or disable the system-assigned managed identity for this storage account. Defaults to true."
 }
 
+variable "user_assigned_identities" {
+  type        = list(string)
+  default     = []
+  description = "List of user assigned identities to assign to the storage account"
+}
+
 variable "allow_nested_items_to_be_public" {
   description = "Allow or disallow nested items to be public. Defaults to false."
   type        = bool

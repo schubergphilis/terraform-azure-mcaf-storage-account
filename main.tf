@@ -32,10 +32,11 @@ resource "azurerm_storage_account" "this" {
   }
 
   dynamic "identity" {
-    for_each = var.system_assigned_identity_enabled ? [true] : []
+    for_each = coalesce(local.identity_system_assigned_user_assigned, local.identity_system_assigned, local.identity_user_assigned, {})
 
     content {
-      type = "SystemAssigned"
+      type         = identity.value.type
+      identity_ids = identity.value.user_assigned_resource_ids
     }
   }
 
