@@ -17,8 +17,8 @@ resource "azurerm_storage_account" "this" {
   infrastructure_encryption_enabled = var.infrastructure_encryption_enabled
   sftp_enabled                      = var.sftp_enabled
   allow_nested_items_to_be_public   = var.allow_nested_items_to_be_public
-  queue_encryption_key_type         = (var.enable_cmk_encryption || local.cmk == 1) ? "Account" : "Service"
-  table_encryption_key_type         = (var.enable_cmk_encryption || local.cmk == 1) ? "Account" : "Service"
+  queue_encryption_key_type         = (var.enable_cmk_encryption || var.cmk_key_vault_id != null) ? "Account" : "Service"
+  table_encryption_key_type         = (var.enable_cmk_encryption || var.cmk_key_vault_id != null) ? "Account" : "Service"
 
   blob_properties {
     delete_retention_policy {
@@ -32,10 +32,11 @@ resource "azurerm_storage_account" "this" {
   }
 
   dynamic "identity" {
-    for_each = var.system_assigned_identity_enabled ? [true] : []
+    for_each = coalesce(local.identity_system_assigned_user_assigned, local.identity_system_assigned, local.identity_user_assigned, {})
 
     content {
-      type = "SystemAssigned"
+      type         = identity.value.type
+      identity_ids = identity.value.user_assigned_resource_ids
     }
   }
 
@@ -85,11 +86,12 @@ resource "azurerm_role_assignment" "extra" {
 }
 
 resource "azurerm_storage_account_customer_managed_key" "this" {
-  count = local.cmk
+  count = var.cmk_key_vault_id != null ? 1 : 0
 
-  storage_account_id = azurerm_storage_account.this.id
-  key_vault_id       = var.cmk_key_vault_id
-  key_name           = var.cmk_key_name
+  storage_account_id        = azurerm_storage_account.this.id
+  user_assigned_identity_id = local.identity_user_assigned != null ? var.user_assigned_identities[0] : null
+  key_vault_id              = var.cmk_key_vault_id
+  key_name                  = var.cmk_key_name
 
   depends_on = [
     azurerm_role_assignment.cmk
@@ -97,7 +99,7 @@ resource "azurerm_storage_account_customer_managed_key" "this" {
 }
 
 resource "azurerm_role_assignment" "cmk" {
-  count = local.cmk
+  count = (var.cmk_key_vault_id != null && (local.identity_system_assigned != null || local.identity_system_assigned_user_assigned != null)) ? 1 : 0
 
   scope                = var.cmk_key_vault_id
   role_definition_name = "Key Vault Crypto Service Encryption User"
