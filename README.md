@@ -6,14 +6,14 @@ Terraform module that will deploy some infra that could be used for Azure Devops
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.7 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4, < 5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 4 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 4, < 5.0 |
 
 ## Modules
 
@@ -51,17 +51,18 @@ No modules.
 | <a name="input_container_delete_retention_days"></a> [container\_delete\_retention\_days](#input\_container\_delete\_retention\_days) | The number of days to retain deleted containers for. Defaults to 90. | `number` | `90` | no |
 | <a name="input_contributors"></a> [contributors](#input\_contributors) | List of principal IDs that are allowed to be contributor on this storage account. Defaults to an empty list. | `list(string)` | `[]` | no |
 | <a name="input_default_to_oauth_authentication"></a> [default\_to\_oauth\_authentication](#input\_default\_to\_oauth\_authentication) | Allow or disallow defaulting to OAuth authentication for this storage account. Defaults to true. | `bool` | `true` | no |
+| <a name="input_enable_cmk_encryption"></a> [enable\_cmk\_encryption](#input\_enable\_cmk\_encryption) | An optional variable to enable supportf for cmk encryption for tables and queues while not setting the cmk encryption | `bool` | `false` | no |
 | <a name="input_https_traffic_only_enabled"></a> [https\_traffic\_only\_enabled](#input\_https\_traffic\_only\_enabled) | Allow or disallow only HTTPS traffic to this storage account. Defaults to true. | `bool` | `true` | no |
 | <a name="input_infrastructure_encryption_enabled"></a> [infrastructure\_encryption\_enabled](#input\_infrastructure\_encryption\_enabled) | Allow or disallow infrastructure encryption for this storage account. Defaults to true. | `bool` | `true` | no |
 | <a name="input_ip_rules"></a> [ip\_rules](#input\_ip\_rules) | A list of IP addresses that are allowed to access this storage account. Defaults to an empty list. | `list(string)` | `[]` | no |
-| <a name="input_managed_identity_enabled"></a> [managed\_identity\_enabled](#input\_managed\_identity\_enabled) | Enable or disable the system-assigned managed identity for this storage account. Defaults to true. | `bool` | `true` | no |
 | <a name="input_min_tls_version"></a> [min\_tls\_version](#input\_min\_tls\_version) | The minimum TLS version to allow for requests to this storage account. Valid options are TLS1\_0, TLS1\_1, and TLS1\_2. Defaults to TLS1\_2. | `string` | `"TLS1_2"` | no |
-| <a name="input_network_bypass"></a> [network\_bypass](#input\_network\_bypass) | A list of services that are allowed to bypass the network rules. Defaults to [], could be any of ["Logging", "Metrics", "AzureServices", "None"]. | `list(string)` | `[]` | no |
+| <a name="input_network_bypass"></a> [network\_bypass](#input\_network\_bypass) | A list of services that are allowed to bypass the network rules. Defaults to [], could be any of ["Logging", "Metrics", "AzureServices", "None"]. | `list(string)` | <pre>[<br>  "AzureServices"<br>]</pre> | no |
 | <a name="input_public_network_access_enabled"></a> [public\_network\_access\_enabled](#input\_public\_network\_access\_enabled) | Allow or disallow public network access to this storage account. Defaults to false. | `bool` | `false` | no |
 | <a name="input_sftp_enabled"></a> [sftp\_enabled](#input\_sftp\_enabled) | Allow or disallow SFTP access to this storage account. Defaults to false. | `bool` | `false` | no |
 | <a name="input_shared_access_key_enabled"></a> [shared\_access\_key\_enabled](#input\_shared\_access\_key\_enabled) | Allow or disallow shared access keys for this storage account. Defaults to false. | `bool` | `false` | no |
 | <a name="input_storage_containers"></a> [storage\_containers](#input\_storage\_containers) | Map of Storage Containers to Create and whether the container should be publically accessible, defaults to private | <pre>map(object({<br>    access_type = optional(string, "private")<br>  }))</pre> | `{}` | no |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | A list of subnet IDs that are allowed to access this storage account. Defaults to an empty list. | `list(string)` | `[]` | no |
+| <a name="input_system_assigned_identity_enabled"></a> [system\_assigned\_identity\_enabled](#input\_system\_assigned\_identity\_enabled) | Enable or disable the system-assigned managed identity for this storage account. Defaults to true. | `bool` | `true` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to assign to the resource. | `map(string)` | `{}` | no |
 | <a name="input_versioning_enabled"></a> [versioning\_enabled](#input\_versioning\_enabled) | Is versioning enabled? | `bool` | `true` | no |
 

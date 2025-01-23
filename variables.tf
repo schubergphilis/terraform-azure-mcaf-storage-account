@@ -68,7 +68,6 @@ variable "infrastructure_encryption_enabled" {
   default     = true
 }
 
-
 variable "min_tls_version" {
   description = "The minimum TLS version to allow for requests to this storage account. Valid options are TLS1_0, TLS1_1, and TLS1_2. Defaults to TLS1_2."
   type        = string
@@ -81,7 +80,7 @@ variable "sftp_enabled" {
   description = "Allow or disallow SFTP access to this storage account. Defaults to false."
 }
 
-variable "managed_identity_enabled" {
+variable "system_assigned_identity_enabled" {
   type        = bool
   default     = true
   description = "Enable or disable the system-assigned managed identity for this storage account. Defaults to true."
@@ -95,7 +94,7 @@ variable "allow_nested_items_to_be_public" {
 
 variable "network_bypass" {
   type        = list(string)
-  default     = []
+  default     = ["AzureServices"]
   description = "A list of services that are allowed to bypass the network rules. Defaults to [], could be any of [\"Logging\", \"Metrics\", \"AzureServices\", \"None\"]."
 }
 
@@ -147,6 +146,12 @@ variable "contributors" {
   type        = list(string)
   default     = []
   description = "List of principal IDs that are allowed to be contributor on this storage account. Defaults to an empty list."
+}
+
+variable "enable_cmk_encryption" {
+  type        = bool
+  default     = false
+  description = "An optional variable to enable supportf for cmk encryption for tables and queues while not setting the cmk encryption"
 }
 
 variable "cmk_key_vault_id" {
