@@ -41,7 +41,7 @@ resource "azurerm_storage_account" "this" {
   }
 
   dynamic "immutability_policy" {
-    for_each = immutability_policy != null ? immutability_policy : {}
+    for_each = var.immutability_policy != null ? var.immutability_policy : {}
 
     content {
       allow_protected_append_writes = immutability_policy.value.allow_protected_append_writes

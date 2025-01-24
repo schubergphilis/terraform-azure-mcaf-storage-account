@@ -179,7 +179,7 @@ variable "tags" {
 }
 
 variable "immutability_policy" {
-  description = "immutability policy settings for the storage account, defaults to null which does not set any immutability policies"
+  description = "immutability policy settings for the storage account, defaults to null which does not set any immutability policy"
   type = object({
     state                         = optional(string, "Unlocked")
     allow_protected_append_writes = optional(bool, true)
