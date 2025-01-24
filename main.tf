@@ -40,6 +40,16 @@ resource "azurerm_storage_account" "this" {
     }
   }
 
+  dynamic "immutability_policy" {
+    for_each = immutability_policy != null ? immutability_policy : {}
+
+    content {
+      allow_protected_append_writes = immutability_policy.value.allow_protected_append_writes
+      state                         = immutability_policy.value.state
+      period_since_creation_in_days = immutability_policy.value.period_since_creation_in_days
+    }
+  }
+
   tags = merge(
     try(var.tags),
     tomap({
