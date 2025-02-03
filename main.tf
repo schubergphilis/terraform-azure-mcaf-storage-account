@@ -67,7 +67,7 @@ resource "azurerm_storage_account" "this" {
 resource "azurerm_storage_account_network_rules" "this" {
   storage_account_id = azurerm_storage_account.this.id
 
-  default_action             = length(var.ip_rules) == 0 && length(var.subnet_ids) == 0 ? "Allow" : "Deny"
+  default_action             = length(var.ip_rules) == 0 && length(var.subnet_ids) == 0 && var.default_action != "Deny" ? "Allow" : "Deny"
   ip_rules                   = var.ip_rules
   virtual_network_subnet_ids = var.subnet_ids
   bypass                     = var.network_bypass

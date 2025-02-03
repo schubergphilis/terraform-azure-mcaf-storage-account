@@ -38,6 +38,12 @@ variable "access_tier" {
   description = "The access tier for the storage account. Valid options are Hot and Cool. Defaults to Hot."
 }
 
+variable "default_action" {
+  type        = string
+  default     = "Deny"
+  description = "The default action for the network rules. Valid options are Allow and Deny. Defaults to Allow."
+}
+
 variable "shared_access_key_enabled" {
   type        = bool
   default     = false
