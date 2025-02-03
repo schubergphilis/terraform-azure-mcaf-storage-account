@@ -19,6 +19,7 @@ resource "azurerm_storage_account" "this" {
   allow_nested_items_to_be_public   = var.allow_nested_items_to_be_public
   queue_encryption_key_type         = (var.enable_cmk_encryption || var.cmk_key_vault_id != null) ? "Account" : "Service"
   table_encryption_key_type         = (var.enable_cmk_encryption || var.cmk_key_vault_id != null) ? "Account" : "Service"
+  allowed_copy_scope                = var.allowed_copy_scope
 
   blob_properties {
     delete_retention_policy {

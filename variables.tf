@@ -32,6 +32,12 @@ variable "account_kind" {
   description = "The Kind of account to create. Valid options are Storage, StorageV2, BlobStorage, FileStorage, BlockBlobStorage, and StorageV2. Defaults to StorageV2."
 }
 
+variable "allowed_copy_scope" {
+  type        = string
+  default     = "PrivateLink"
+  description = "The scope of the allowed copy operation. Valid options are PrivateLink and AAD. Defaults to PrivateLink."
+}
+
 variable "access_tier" {
   type        = string
   default     = "Hot"
