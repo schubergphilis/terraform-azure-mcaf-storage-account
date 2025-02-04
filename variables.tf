@@ -58,6 +58,12 @@ variable "infrastructure_encryption_enabled" {
   description = "Allow or disallow infrastructure encryption for this storage account. Defaults to true."
 }
 
+variable "min_tls_version" {
+  description = "The minimum TLS version to allow for requests to this storage account. Valid options are TLS1_0, TLS1_1, and TLS1_2. Defaults to TLS1_2."
+  type        = string
+  default     = "TLS1_2"
+}
+
 variable "sftp_enabled" {
   type        = bool
   default     = false
