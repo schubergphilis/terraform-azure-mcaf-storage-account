@@ -14,6 +14,7 @@ resource "azurerm_storage_account" "this" {
   min_tls_version                   = var.min_tls_version
   default_to_oauth_authentication   = var.default_to_oauth_authentication
   infrastructure_encryption_enabled = var.infrastructure_encryption_enabled
+  cross_tenant_replication_enabled  = var.cross_tenant_replication_enabled
   sftp_enabled                      = var.sftp_enabled
   allow_nested_items_to_be_public   = var.network_configuration.allow_nested_items_to_be_public
   queue_encryption_key_type         = (var.enable_cmk_encryption || var.cmk_key_vault_id != null) ? "Account" : "Service"
