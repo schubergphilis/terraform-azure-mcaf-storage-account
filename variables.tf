@@ -64,8 +64,14 @@ variable "cross_tenant_replication_enabled" {
   description = "Allow or disallow cross Tenant replication for this storage account. Defaults to false."
 }
 
+variable "allowed_copy_scope" {
+  type = string
+  default = "AAD"
+  description = "Restrict copy scope for the storage account, valid values are 'Unrestricted', 'AAD' and 'Privatelink'. Defaults to 'AAD'. Unrestricted matches Azure Default of 'null'"
+}
+
 variable "min_tls_version" {
-  description = "The minimum TLS version to allow for requests to this storage account. Valid options are TLS1_0, TLS1_1, and TLS1_2. Defaults to TLS1_2."
+  description = "The minimum TLS version to allow for requests to this storage account. Valid options are 'TLS1_0', 'TLS1_1', and 'TLS1_2'. Defaults to 'TLS1_2'."
   type        = string
   default     = "TLS1_2"
 }
