@@ -1,5 +1,4 @@
-data "azurerm_client_config" "current" {
-}
+data "azurerm_client_config" "current" {}
 
 resource "azurerm_storage_account" "this" {
   resource_group_name               = var.resource_group_name
@@ -10,22 +9,24 @@ resource "azurerm_storage_account" "this" {
   account_kind                      = var.account_kind
   access_tier                       = var.access_tier
   shared_access_key_enabled         = var.shared_access_key_enabled
-  public_network_access_enabled     = var.public_network_access_enabled
-  https_traffic_only_enabled        = var.https_traffic_only_enabled
+  public_network_access_enabled     = var.network_configuration.public_network_access_enabled
+  https_traffic_only_enabled        = var.network_configuration.https_traffic_only_enabled
   min_tls_version                   = var.min_tls_version
   default_to_oauth_authentication   = var.default_to_oauth_authentication
   infrastructure_encryption_enabled = var.infrastructure_encryption_enabled
+  cross_tenant_replication_enabled  = var.cross_tenant_replication_enabled
+  allowed_copy_scope                = var.allowed_copy_scope == "Unrestricted" ? null : var.allowed_copy_scope
   sftp_enabled                      = var.sftp_enabled
-  allow_nested_items_to_be_public   = var.allow_nested_items_to_be_public
+  allow_nested_items_to_be_public   = var.network_configuration.allow_nested_items_to_be_public
   queue_encryption_key_type         = (var.enable_cmk_encryption || var.cmk_key_vault_id != null) ? "Account" : "Service"
   table_encryption_key_type         = (var.enable_cmk_encryption || var.cmk_key_vault_id != null) ? "Account" : "Service"
 
   blob_properties {
     delete_retention_policy {
-      days = var.blob_delete_retention_days
+      days = var.storage_management_policy.blob_delete_retention_days
     }
     container_delete_retention_policy {
-      days = var.container_delete_retention_days
+      days = var.storage_management_policy.container_delete_retention_days
     }
     versioning_enabled  = var.versioning_enabled
     change_feed_enabled = var.change_feed_enabled
@@ -41,7 +42,7 @@ resource "azurerm_storage_account" "this" {
   }
 
   dynamic "immutability_policy" {
-    for_each = local.immutability_policy != null ? local.immutability_policy : {}
+    for_each = var.immutability_policy != null ? { this = var.immutability_policy } : {}
 
     content {
       allow_protected_append_writes = immutability_policy.value.allow_protected_append_writes
@@ -67,10 +68,31 @@ resource "azurerm_storage_account" "this" {
 resource "azurerm_storage_account_network_rules" "this" {
   storage_account_id = azurerm_storage_account.this.id
 
-  default_action             = length(var.ip_rules) == 0 && length(var.subnet_ids) == 0 ? "Allow" : "Deny"
-  ip_rules                   = var.ip_rules
-  virtual_network_subnet_ids = var.subnet_ids
-  bypass                     = var.network_bypass
+  default_action             = var.network_configuration.default_action
+  ip_rules                   = var.network_configuration.ip_rules
+  virtual_network_subnet_ids = var.network_configuration.virtual_network_subnet_ids
+  bypass                     = var.network_configuration.bypass
+}
+
+resource "azurerm_storage_management_policy" "this" {
+  count              = length(compact([var.storage_management_policy.move_to_cool_after_days, var.storage_management_policy.move_to_cold_after_days, var.storage_management_policy.move_to_archive_after_days, var.storage_management_policy.delete_after_days])) > 0 ? 1 : 0
+  storage_account_id = azurerm_storage_account.this.id
+
+  rule {
+    name    = "Storage Account Module builtin management policy"
+    enabled = true
+    filters {
+      blob_types = ["blockBlob"]
+    }
+    actions {
+      base_blob {
+        tier_to_cool_after_days_since_modification_greater_than = var.storage_management_policy.move_to_cool_after_days
+        tier_to_cold_after_days_since_creation_greater_than     = var.storage_management_policy.move_to_cold_after_days
+        tier_to_archive_after_days_since_creation_greater_than  = var.storage_management_policy.move_to_archive_after_days
+        delete_after_days_since_modification_greater_than       = var.storage_management_policy.delete_after_days
+      }
+    }
+  }
 }
 
 resource "azurerm_storage_container" "this" {
