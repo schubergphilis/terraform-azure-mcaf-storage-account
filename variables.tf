@@ -149,7 +149,7 @@ Example:
     "share3" = {
       access_tier      = "TransactionOptimized"
       enabled_protocol = "SMB"
-      quota            = 102400
+      quota            = 500
     }
     "share4" = {
       access_tier      = "Premium"
