@@ -94,9 +94,9 @@ variable "system_assigned_identity_enabled" {
 }
 
 variable "user_assigned_identities" {
-  type        = list(string)
+  type        = set(string)
   default     = []
-  description = "List of user assigned identities to assign to the storage account. Defaults to an empty list."
+  description = "set of user assigned identities to assign to the storage account. Defaults to an empty set."
 }
 
 variable "versioning_enabled" {
@@ -183,9 +183,9 @@ DESCRIPTION
 }
 
 variable "contributors" {
-  type        = list(string)
+  type        = set(string)
   default     = []
-  description = "List of principal IDs that are allowed to be contributor on this storage account. Defaults to an empty list."
+  description = "set of principal IDs that are allowed to be contributor on this storage account. Defaults to an empty set."
 }
 
 variable "enable_cmk_encryption" {
@@ -249,9 +249,9 @@ variable "network_configuration" {
     allow_nested_items_to_be_public = optional(bool, false)
     public_network_access_enabled   = optional(bool, false)
     default_action                  = optional(string, "Deny")
-    virtual_network_subnet_ids      = optional(list(string), [])
-    ip_rules                        = optional(list(string), [])
-    bypass                          = optional(list(string), ["AzureServices"])
+    virtual_network_subnet_ids      = optional(set(string), [])
+    ip_rules                        = optional(set(string), [])
+    bypass                          = optional(set(string), ["AzureServices"])
   })
   default = {
     https_traffic_only_enabled      = true
