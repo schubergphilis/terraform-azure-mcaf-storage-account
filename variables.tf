@@ -154,7 +154,7 @@ Example:
     "share4" = {
       access_tier      = "Premium"
       enabled_protocol = "SMB"
-      quota            = 102400add
+      quota            = 102400
     }
   }
 
