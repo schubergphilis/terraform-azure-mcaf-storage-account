@@ -8,7 +8,7 @@ variable "share_properties" {
       versions                        = optional(set(string))
     }))
   })
-  default     = {
+  default = {
     smb = {
       authentication_types            = ["NTLMv2", "Kerberos"]
       channel_encryption_type         = ["AES-128-CCM", "AES-128-GCM", "AES-256-GCM"]

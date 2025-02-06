@@ -10,7 +10,7 @@ module "storage_account" {
   location            = "West Europe"
 
   network_configuration = {
-    ip_rules       = ["123.123.123.123"]
+    ip_rules = ["123.123.123.123"]
   }
 
   storage_containers = {
