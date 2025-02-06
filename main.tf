@@ -103,6 +103,16 @@ resource "azurerm_storage_container" "this" {
   container_access_type = each.value.access_type
 }
 
+resource "azurerm_storage_share" "this" {
+  for_each = var.storage_file_shares
+
+  name               = each.key
+  storage_account_id = azurerm_storage_account.this.id
+  access_tier        = each.value.access_tier
+  enabled_protocol   = each.value.enabled_protocol
+  quota              = each.value.quota
+}
+
 resource "azurerm_role_assignment" "this" {
   scope                = azurerm_storage_account.this.id
   role_definition_name = "Storage Blob Data Owner"
