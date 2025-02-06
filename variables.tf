@@ -65,9 +65,9 @@ variable "cross_tenant_replication_enabled" {
 }
 
 variable "allowed_copy_scope" {
-  type = string
-  default = "AAD"
-  description = "Restrict copy scope for the storage account, valid values are 'Unrestricted', 'AAD' and 'Privatelink'. Defaults to 'AAD'. Unrestricted matches Azure Default of 'null'"
+  type        = string
+  default     = "Privatelink"
+  description = "Restrict copy scope for the storage account, valid values are 'Unrestricted', 'AAD' and 'Privatelink'. Defaults to 'Privatelink'. Unrestricted matches Azure Default of 'null'"
 }
 
 variable "min_tls_version" {
