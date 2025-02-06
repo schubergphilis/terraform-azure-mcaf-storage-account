@@ -70,7 +70,7 @@ variable "allowed_copy_scope" {
   description = "Restrict copy scope for the storage account, valid values are 'Unrestricted', 'AAD' and 'PrivateLink'. Defaults to 'PrivateLink'. Unrestricted matches Azure Default of 'null'."
 
   validation {
-    condition     = contains(["Unrestricted", "AAD", "PrivateLink"], var.allowed_copy_scop)
+    condition     = contains(["Unrestricted", "AAD", "PrivateLink"], var.allowed_copy_scope)
     error_message = "The channel must be either 'Unrestricted', 'AAD' or 'PrivateLink'"
   }
 }
