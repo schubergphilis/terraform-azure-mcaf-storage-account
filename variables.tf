@@ -121,9 +121,9 @@ variable "storage_containers" {
 
 variable "storage_file_shares" {
   type = map(object({
-    access_tier = optional(string, "Hot")
+    access_tier      = optional(string, "Hot")
     enabled_protocol = optional(string, "SMB")
-    quota = optional(number, 1)
+    quota            = optional(number, 1)
   }))
   default     = {}
   description = <<DESCRIPTION
@@ -177,7 +177,7 @@ DESCRIPTION
     error_message = "The quota must be greater than or equal to 1"
   }
   validation {
-    condition = alltrue([for share in var.storage_file_shares : (share.access_tier != "Premium" && share.quota <= 5120) || (share.access_tier == "Premium" && share.quota >= 100 && share.quota <= 102400)])
+    condition     = alltrue([for share in var.storage_file_shares : (share.access_tier != "Premium" && share.quota <= 5120) || (share.access_tier == "Premium" && share.quota >= 100 && share.quota <= 102400)])
     error_message = "The quota must be less than or equal to 5120 for non-Premium tiers. For Premium tier, it must be between 100 and 102400."
   }
 }

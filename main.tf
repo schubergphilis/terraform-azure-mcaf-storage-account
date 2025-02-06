@@ -108,8 +108,8 @@ resource "azurerm_storage_share" "this" {
 
   name               = each.key
   storage_account_id = azurerm_storage_account.this.id
-  access_tier = each.value.access_tier
-  enabled_protocol = each.value.enabled_protocol
+  access_tier        = each.value.access_tier
+  enabled_protocol   = each.value.enabled_protocol
   quota              = each.value.quota
 }
 
