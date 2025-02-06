@@ -66,8 +66,13 @@ variable "cross_tenant_replication_enabled" {
 
 variable "allowed_copy_scope" {
   type        = string
-  default     = "Privatelink"
-  description = "Restrict copy scope for the storage account, valid values are 'Unrestricted', 'AAD' and 'Privatelink'. Defaults to 'Privatelink'. Unrestricted matches Azure Default of 'null'"
+  default     = "PrivateLink"
+  description = "Restrict copy scope for the storage account, valid values are 'Unrestricted', 'AAD' and 'PrivateLink'. Defaults to 'PrivateLink'. Unrestricted matches Azure Default of 'null'."
+
+  validation {
+    condition     = contains(["Unrestricted", "AAD", "PrivateLink"], var.allowed_copy_scop)
+    error_message = "The channel must be either 'Unrestricted', 'AAD' or 'PrivateLink'"
+  }
 }
 
 variable "min_tls_version" {
