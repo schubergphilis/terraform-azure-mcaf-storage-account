@@ -31,7 +31,7 @@ variable "share_properties" {
       authentication_types            = ["NTLMv2", "Kerberos"]
       channel_encryption_type         = ["AES-128-CCM", "AES-128-GCM", "AES-256-GCM"]
       kerberos_ticket_encryption_type = ["RC4-HMAC", "AES-256"]
-      multichannel_enabled            = true
+      multichannel_enabled            = false
       versions                        = ["SMB2.1", "SMB3.0", "SMB3.1.1"]
     }
   }
@@ -39,7 +39,7 @@ variable "share_properties" {
 DESCRIPTION
 
   validation {
-    condition     = var.share_properties.smb.multichannel_enabled == false || (var.share_properties.smb.multichannel_enabled == true && var.account_tier == "Premium")
+    condition     = var.share_properties.smb.multichannel_enabled == null || var.share_properties.smb.multichannel_enabled == false || (var.share_properties.smb.multichannel_enabled == true && var.account_tier == "Premium")
     error_message = "The multichannel_enabled can only be set to true when the account_tier is 'Premium'."
   }
 }
