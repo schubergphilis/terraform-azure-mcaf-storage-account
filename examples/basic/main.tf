@@ -35,7 +35,7 @@ module "storage_account" {
       channel_encryption_type         = ["AES-128-CCM", "AES-128-GCM", "AES-256-GCM"]
       kerberos_ticket_encryption_type = ["RC4-HMAC", "AES-256"]
       multichannel_enabled            = false
-      versions                        = ["SMB2.1", "SMB3.0", "SMB3.1.1"]
+      versions                        = ["SMB3.0", "SMB3.1.1"]
     }
   }
 }
