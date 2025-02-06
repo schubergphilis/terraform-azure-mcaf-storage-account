@@ -154,30 +154,30 @@ Example:
     "share4" = {
       access_tier      = "Premium"
       enabled_protocol = "SMB"
-      quota            = 102400
+      quota            = 102400add
     }
   }
 
 DESCRIPTION
 
   validation {
-    condition     = alltrue([for share in var.storage_file_shares : contains(["Hot", "Cool", "TransactionOptimized", "Premium"], share.value.access_tier)])
+    condition     = alltrue([for share in var.storage_file_shares : contains(["Hot", "Cool", "TransactionOptimized", "Premium"], share.access_tier)])
     error_message = "The access_tier must be either 'Hot', 'Cool, 'TransactionOptimized' or 'Premium'"
   }
   validation {
-    condition     = alltrue([for share in var.storage_file_shares : contains(["SMB", "NFS"], share.value.enabled_protocol)])
+    condition     = alltrue([for share in var.storage_file_shares : contains(["SMB", "NFS"], share.enabled_protocol)])
     error_message = "The enabled_protocol must be either 'SMB' or 'NFS'"
   }
   validation {
-    condition     = alltrue([for share in var.storage_file_shares : (share.value.enabled_protocol != "NFS") || (share.value.enabled_protocol == "NFS" && var.account_kind == "FileStorage")])
+    condition     = alltrue([for share in var.storage_file_shares : (share.enabled_protocol != "NFS") || (share.enabled_protocol == "NFS" && var.account_kind == "FileStorage")])
     error_message = "If the enabled_protocol is 'NFS', the account_kind must be 'FileStorage'."
   }
   validation {
-    condition     = alltrue([for share in var.storage_file_shares : share.value.quota >= 1])
+    condition     = alltrue([for share in var.storage_file_shares : share.quota >= 1])
     error_message = "The quota must be greater than or equal to 1"
   }
   validation {
-    condition = alltrue([for share in var.storage_file_shares : (share.value.access_tier != "Premium" && share.value.quota <= 5120) || (share.value.access_tier == "Premium" && share.value.quota >= 100 && share.value.quota <= 102400)])
+    condition = alltrue([for share in var.storage_file_shares : (share.access_tier != "Premium" && share.quota <= 5120) || (share.access_tier == "Premium" && share.quota >= 100 && share.quota <= 102400)])
     error_message = "The quota must be less than or equal to 5120 for non-Premium tiers. For Premium tier, it must be between 100 and 102400."
   }
 }
