@@ -1,24 +1,31 @@
 variable "share_properties" {
   type = object({
+    retention_policy = optional(object({
+      days = optional(number)
+    }), null)
     smb = optional(object({
       authentication_types            = optional(set(string), ["NTLMv2", "Kerberos"])
       channel_encryption_type         = optional(set(string), ["AES-128-CCM", "AES-128-GCM", "AES-256-GCM"])
       kerberos_ticket_encryption_type = optional(set(string), ["AES-256"])
       multichannel_enabled            = optional(bool, false)
       versions                        = optional(set(string), ["SMB3.1.1"])
-    }))
+    }), {})
   })
-  default = {
-    smb = {}
-  }
+  default     = {}
   description = <<DESCRIPTION
 
-- `authentication_types` - (Optional) A set of SMB authentication methods. Possible values are `NTLMv2`, and `Kerberos`.
-- `channel_encryption_type` - (Optional) A set of SMB channel encryption. Possible values are `AES-128-CCM`, `AES-128-GCM`, and `AES-256-GCM`.
-- `kerberos_ticket_encryption_type` - (Optional) A set of Kerberos ticket encryption. Possible values are `RC4-HMAC`, and `AES-256`.
-- `multichannel_enabled` - (Optional) Indicates whether multichannel is enabled. Defaults to `false`. This is only supported on Premium storage accounts.
-- `versions` - (Optional) A set of SMB protocol versions. Possible values are `SMB2.1`, `SMB3.0`, and `SMB3.1.1`.
+---
+- `retention_policy` - (Optional) A set of properties for the retention policy.
+  - `days` - (Optional) The number of days that the share should retain data. If not specified, the share will retain data indefinitely.
 
+- `smb` - (Optional) A set of properties for the SMB protocol.
+  - `authentication_types` - (Optional) A set of SMB authentication methods. Possible values are `NTLMv2`, and `Kerberos`.
+  - `channel_encryption_type` - (Optional) A set of SMB channel encryption. Possible values are `AES-128-CCM`, `AES-128-GCM`, and `AES-256-GCM`.
+  - `kerberos_ticket_encryption_type` - (Optional) A set of Kerberos ticket encryption. Possible values are `RC4-HMAC`, and `AES-256`.
+  - `multichannel_enabled` - (Optional) Indicates whether multichannel is enabled. Defaults to `false`. This is only supported on Premium storage accounts.
+  - `versions` - (Optional) A set of SMB protocol versions. Possible values are `SMB2.1`, `SMB3.0`, and `SMB3.1.1`.
+
+---
 ```hcl
   share_properties = {
     smb = {
@@ -27,6 +34,9 @@ variable "share_properties" {
       kerberos_ticket_encryption_type = ["RC4-HMAC", "AES-256"]
       multichannel_enabled            = false
       versions                        = ["SMB2.1", "SMB3.0", "SMB3.1.1"]
+    }
+    retention_policy = {
+      days = 30
     }
   }
 ```

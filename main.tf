@@ -55,6 +55,14 @@ resource "azurerm_storage_account" "this" {
     for_each = var.share_properties == null ? [] : [var.share_properties]
 
     content {
+      dynamic "retention_policy" {
+        for_each = share_properties.value.retention_policy == null ? [] : [share_properties.value.retention_policy]
+
+        content {
+          days = retention_policy.value.days
+        }
+      }
+
       dynamic "smb" {
         for_each = share_properties.value.smb == null ? [] : [share_properties.value.smb]
 
