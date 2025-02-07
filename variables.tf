@@ -169,14 +169,7 @@ variable "storage_management_policy" {
     move_to_archive_after_days      = optional(number, null)
     delete_after_days               = optional(number, null)
   })
-  default = {
-    blob_delete_retention_days      = 90
-    container_delete_retention_days = 90
-    move_to_cool_after_days         = null
-    move_to_cold_after_days         = null
-    move_to_archive_after_days      = null
-    delete_after_days               = null
-  }
+  default = {}
 }
 
 variable "network_configuration" {
@@ -190,13 +183,5 @@ variable "network_configuration" {
     ip_rules                        = optional(set(string), [])
     bypass                          = optional(set(string), ["AzureServices"])
   })
-  default = {
-    https_traffic_only_enabled      = true
-    allow_nested_items_to_be_public = false
-    public_network_access_enabled   = false
-    default_action                  = "Deny"
-    virtual_network_subnet_ids      = []
-    ip_rules                        = []
-    bypass                          = ["AzureServices"]
-  }
+  default = {}
 }
