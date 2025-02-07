@@ -51,6 +51,24 @@ resource "azurerm_storage_account" "this" {
     }
   }
 
+  dynamic "share_properties" {
+    for_each = var.share_properties == null ? [] : [var.share_properties]
+
+    content {
+      dynamic "smb" {
+        for_each = share_properties.value.smb == null ? [] : [share_properties.value.smb]
+
+        content {
+          authentication_types            = smb.value.authentication_types
+          channel_encryption_type         = smb.value.channel_encryption_type
+          kerberos_ticket_encryption_type = smb.value.kerberos_ticket_encryption_type
+          multichannel_enabled            = smb.value.multichannel_enabled
+          versions                        = smb.value.versions
+        }
+      }
+    }
+  }
+
   tags = merge(
     try(var.tags),
     tomap({
