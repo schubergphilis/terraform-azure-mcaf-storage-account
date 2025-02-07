@@ -94,9 +94,9 @@ variable "system_assigned_identity_enabled" {
 }
 
 variable "user_assigned_identities" {
-  type        = set(string)
+  type        = list(string)
   default     = []
-  description = "set of user assigned identities to assign to the storage account. Defaults to an empty set."
+  description = "list of user assigned identities to assign to the storage account. Defaults to an empty list."
 }
 
 variable "versioning_enabled" {
@@ -120,9 +120,9 @@ variable "storage_containers" {
 }
 
 variable "contributors" {
-  type        = set(string)
+  type        = list(string)
   default     = []
-  description = "set of principal IDs that are allowed to be contributor on this storage account. Defaults to an empty set."
+  description = "list of principal IDs that are allowed to be contributor on this storage account. Defaults to an empty list."
 }
 
 variable "enable_cmk_encryption" {
