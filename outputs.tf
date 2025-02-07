@@ -24,3 +24,8 @@ output "endpoints" {
   }
   description = "Endpoint information of the storage account"
 }
+
+# output "file_shares" {
+#   value = azurerm_storage_share.this[*].name
+#   description = "Names of the file shares created in the storage account"
+# }

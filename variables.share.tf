@@ -3,7 +3,7 @@ variable "share_properties" {
     smb = optional(object({
       authentication_types            = optional(set(string), ["NTLMv2", "Kerberos"])
       channel_encryption_type         = optional(set(string), ["AES-128-CCM", "AES-128-GCM", "AES-256-GCM"])
-      kerberos_ticket_encryption_type = optional(set(string), ["RC4-HMAC", "AES-256"])
+      kerberos_ticket_encryption_type = optional(set(string), ["AES-256"])
       multichannel_enabled            = optional(bool, false)
       versions                        = optional(set(string), ["SMB3.1.1"])
     }))
