@@ -11,6 +11,7 @@ variable "share_properties" {
       versions                        = optional(set(string), ["SMB3.1.1"])
     }), {})
   })
+  default     = {}
   description = <<DESCRIPTION
 
 ---

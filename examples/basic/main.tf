@@ -37,5 +37,8 @@ module "storage_account" {
       multichannel_enabled            = false
       versions                        = ["SMB3.0", "SMB3.1.1"]
     }
+    retention_policy = {
+      days = 30
+    }
   }
 }
