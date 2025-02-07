@@ -52,7 +52,7 @@ resource "azurerm_storage_account" "this" {
   }
 
   dynamic "share_properties" {
-    for_each = var.share_properties != null ? [var.share_properties] : []
+    for_each = var.share_properties == null ? [] : [var.share_properties]
 
     content {
       dynamic "smb" {

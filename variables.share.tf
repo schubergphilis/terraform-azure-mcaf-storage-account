@@ -1,21 +1,15 @@
 variable "share_properties" {
   type = object({
     smb = optional(object({
-      authentication_types            = optional(set(string))
-      channel_encryption_type         = optional(set(string))
-      kerberos_ticket_encryption_type = optional(set(string))
-      multichannel_enabled            = optional(bool)
-      versions                        = optional(set(string))
+      authentication_types            = optional(set(string), ["NTLMv2", "Kerberos"])
+      channel_encryption_type         = optional(set(string), ["AES-128-CCM", "AES-128-GCM", "AES-256-GCM"])
+      kerberos_ticket_encryption_type = optional(set(string), ["RC4-HMAC", "AES-256"])
+      multichannel_enabled            = optional(bool, false)
+      versions                        = optional(set(string), ["SMB3.1.1"])
     }))
   })
   default = {
-    smb = {
-      authentication_types            = ["NTLMv2", "Kerberos"]
-      channel_encryption_type         = ["AES-128-CCM", "AES-128-GCM", "AES-256-GCM"]
-      kerberos_ticket_encryption_type = ["AES-256"]
-      multichannel_enabled            = false
-      versions                        = ["SMB3.1.1"]
-    }
+    smb = {}
   }
   description = <<DESCRIPTION
 
@@ -37,11 +31,6 @@ variable "share_properties" {
   }
 ```
 DESCRIPTION
-
-  validation {
-    condition     = var.share_properties.smb.multichannel_enabled == null || var.share_properties.smb.multichannel_enabled == false || (var.share_properties.smb.multichannel_enabled == true && var.account_tier == "Premium")
-    error_message = "The multichannel_enabled can only be set to true when the account_tier is 'Premium'."
-  }
 }
 
 variable "storage_file_shares" {
