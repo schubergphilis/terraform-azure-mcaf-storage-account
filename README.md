@@ -17,7 +17,9 @@ Terraform module that will deploy some infra that could be used for Azure Devops
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_private_endpoints_managed"></a> [private\_endpoints\_managed](#module\_private\_endpoints\_managed) | github.com/schubergphilis/terraform-azure-mcaf-private-endpoints | v0.2.0 |
 
 ## Resources
 
@@ -38,6 +40,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_deploy_private_endpoints"></a> [deploy\_private\_endpoints](#input\_deploy\_private\_endpoints) | n/a | <pre>object({<br>    blob = optional(object({<br>      name                 = optional(string, null)<br>      private_dns_zone_ids = optional(set(string), null)<br>      subnet_id            = string<br>      private_ip_address   = optional(string, null)<br>    }), null)<br>    queue = optional(object({<br>      name                 = optional(string, null)<br>      private_dns_zone_ids = optional(set(string), null)<br>      subnet_id            = string<br>      private_ip_address   = optional(string, null)<br>    }), null)<br>    file = optional(object({<br>      name                 = optional(string, null)<br>      private_dns_zone_ids = optional(set(string), null)<br>      subnet_id            = string<br>      private_ip_address   = optional(string, null)<br>    }), null)<br>    table = optional(object({<br>      name                 = optional(string, null)<br>      private_dns_zone_ids = optional(set(string), null)<br>      subnet_id            = string<br>      private_ip_address   = optional(string, null)<br>    }), null)<br>    private_endpoints_manage_dns_zone_group = optional(bool, true)<br>    resource_group                          = optional(string, null)<br>  })</pre> | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | Location of the Storage account | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | Name of the Storage Account | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name of the resource group to Create the Storage account in | `string` | n/a | yes |
