@@ -185,3 +185,34 @@ variable "network_configuration" {
   })
   default = {}
 }
+
+variable "deploy_private_endpoints" {
+  type = object({
+    blob = optional(object({
+      name                 = optional(string, null)
+      private_dns_zone_ids = optional(set(string), null)
+      subnet_id            = string
+      private_ip_address   = optional(string, null)
+    }), null)
+    queue = optional(object({
+      name                 = optional(string, null)
+      private_dns_zone_ids = optional(set(string), null)
+      subnet_id            = string
+      private_ip_address   = optional(string, null)
+    }), null)
+    file = optional(object({
+      name                 = optional(string, null)
+      private_dns_zone_ids = optional(set(string), null)
+      subnet_id            = string
+      private_ip_address   = optional(string, null)
+    }), null)
+    table = optional(object({
+      name                 = optional(string, null)
+      private_dns_zone_ids = optional(set(string), null)
+      subnet_id            = string
+      private_ip_address   = optional(string, null)
+    }), null)
+    private_endpoints_manage_dns_zone_group = optional(bool, true)
+    resource_group                          = optional(string, null)
+  })
+}

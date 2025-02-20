@@ -6,7 +6,7 @@
 .DS_Store
 .AppleDouble
 .LSOverride
-
+.idea
 # Icon must end with two \r
 Icon
 
@@ -123,6 +123,7 @@ Sessionx.vim
 # .tfstate files
 *.tfstate
 *.tfstate.*
+.terraform.lock.hcl
 
 # Crash log files
 crash.log
