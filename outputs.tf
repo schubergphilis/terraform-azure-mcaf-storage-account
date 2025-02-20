@@ -24,3 +24,11 @@ output "endpoints" {
   }
   description = "Endpoint information of the storage account"
 }
+
+output "access_keys" {
+  value       = {
+    primary = azurerm_storage_account.this.primary_access_key
+    secondary = azurerm_storage_account.this.secondary_access_key
+  }
+  sensitive = true
+}
