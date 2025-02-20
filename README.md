@@ -72,6 +72,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_access_keys"></a> [access\_keys](#output\_access\_keys) | n/a |
 | <a name="output_endpoints"></a> [endpoints](#output\_endpoints) | Endpoint information of the storage account |
 | <a name="output_id"></a> [id](#output\_id) | Resource Id of the storage account |
 | <a name="output_name"></a> [name](#output\_name) | Name of the storage account |
