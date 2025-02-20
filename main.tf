@@ -183,7 +183,7 @@ resource "azurerm_storage_account_local_user" "this" {
   ssh_key_enabled      = true
   ssh_password_enabled = false
 
-  ssh_authorized_keys {
+  ssh_authorized_key {
     key = each.value.ssh_key
     description = "SSH Key for ${each.value.username}"
   }
