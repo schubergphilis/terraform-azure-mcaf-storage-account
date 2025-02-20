@@ -173,3 +173,17 @@ resource "azurerm_role_assignment" "cmk" {
   role_definition_name = "Key Vault Crypto Service Encryption User"
   principal_id         = azurerm_storage_account.this.identity[0].principal_id
 }
+
+resource "azurerm_storage_account_local_user" "this" {
+  for_each             = { for user in var.local_users : user.username => user }
+  
+  name                 = each.value.username
+  storage_account_id   = azurerm_storage_account.this.id
+  ssh_key_enabled      = true
+  ssh_password_enabled = false
+
+  ssh_authorized_keys {
+    key = each.value.ssh_key
+    description = "SSH Key for ${each.value.username}"
+  }
+}
