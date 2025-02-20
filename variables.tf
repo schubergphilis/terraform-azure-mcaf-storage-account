@@ -87,6 +87,12 @@ variable "sftp_enabled" {
   description = "Allow or disallow SFTP access to this storage account. Defaults to false."
 }
 
+variable "is_hns_enabled" {
+  type        = bool
+  default     = false
+  description = "Is Hierarchical Namespace enabled? Defaults to false."
+}
+
 variable "system_assigned_identity_enabled" {
   type        = bool
   default     = true
@@ -184,17 +190,4 @@ variable "network_configuration" {
     bypass                          = optional(set(string), ["AzureServices"])
   })
   default = {}
-}
-
-variable "local_users" {
-  type = list(object({
-    username = string
-    ssh_key  = string
-    ssh_authorized_keys = list(object({
-      key         = string
-      description = string
-    }))
-  }))
-  default     = []
-  description = "List of local users to create on the storage account. Defaults to an empty list."
 }

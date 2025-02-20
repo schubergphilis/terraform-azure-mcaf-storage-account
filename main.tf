@@ -17,6 +17,7 @@ resource "azurerm_storage_account" "this" {
   cross_tenant_replication_enabled  = var.cross_tenant_replication_enabled
   allowed_copy_scope                = var.allowed_copy_scope == "Unrestricted" ? null : var.allowed_copy_scope
   sftp_enabled                      = var.sftp_enabled
+  is_hns_enabled                    = var.is_hns_enabled
   allow_nested_items_to_be_public   = var.network_configuration.allow_nested_items_to_be_public
   queue_encryption_key_type         = (var.enable_cmk_encryption || var.cmk_key_vault_id != null) ? "Account" : "Service"
   table_encryption_key_type         = (var.enable_cmk_encryption || var.cmk_key_vault_id != null) ? "Account" : "Service"
