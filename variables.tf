@@ -239,7 +239,7 @@ variable "sftp_local_user_config" {
 
   type = list(object({
     name           = string
-    home_directory = string
+    home_directory = optional(string, "")
     ssh_authorized_keys = list(object({
       description = string
       key         = string
