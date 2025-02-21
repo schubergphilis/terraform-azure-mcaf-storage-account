@@ -203,9 +203,11 @@ variable "sftp_local_user_config" {
     ssh_authorized_keys = [
       {
         description = "Public key of local user identity 01"
+        key         = "ssh-rsa"
       },
       {
         description = "Public key of local user identity 02"
+        key         = "ssh-rsa"
       }
     ]
     permission_scopes = [
@@ -240,6 +242,7 @@ variable "sftp_local_user_config" {
     home_directory = string
     ssh_authorized_keys = list(object({
       description = string
+      key         = string
     }))
     permission_scopes = optional(list(object({
       service       = string

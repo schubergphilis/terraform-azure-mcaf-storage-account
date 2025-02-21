@@ -186,7 +186,7 @@ resource "azurerm_storage_account_local_user" "self" {
     for_each = var.sftp_local_user_config.ssh_authorized_keys
     content {
       description = ssh_authorized_key.value.description
-      key         = tls_private_key.openssh-key[count.index].public_key_openssh
+      key         = ssh_authorized_key.value.key
     }
   }
 
