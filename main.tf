@@ -153,12 +153,6 @@ resource "azurerm_role_assignment" "blob_contributor" {
   principal_id         = each.value
 }
 
-resource "azurerm_role_assignment" "backup_contributor" {
-  scope                = azurerm_storage_account.this.id
-  role_definition_name = "Storage Account Backup Contributor"
-  principal_id         = each.value
-}
-
 resource "azurerm_storage_account_customer_managed_key" "this" {
   count = var.cmk_key_vault_id != null ? 1 : 0
 
