@@ -139,17 +139,23 @@ resource "azurerm_storage_share" "this" {
   quota              = each.value.quota
 }
 
-resource "azurerm_role_assignment" "this" {
+resource "azurerm_role_assignment" "blob_owner" {
   scope                = azurerm_storage_account.this.id
   role_definition_name = "Storage Blob Data Owner"
   principal_id         = data.azurerm_client_config.current.object_id
 }
 
-resource "azurerm_role_assignment" "extra" {
+resource "azurerm_role_assignment" "blob_contributor" {
   for_each = { for idx, val in var.contributors : idx => val }
 
   scope                = azurerm_storage_account.this.id
   role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = each.value
+}
+
+resource "azurerm_role_assignment" "backup_contributor" {
+  scope                = azurerm_storage_account.this.id
+  role_definition_name = "Storage Account Backup Contributor"
   principal_id         = each.value
 }
 
@@ -172,4 +178,15 @@ resource "azurerm_role_assignment" "cmk" {
   scope                = var.cmk_key_vault_id
   role_definition_name = "Key Vault Crypto Service Encryption User"
   principal_id         = azurerm_storage_account.this.identity[0].principal_id
+}
+
+resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
+  for_each = var.blob_storage_backup != null ? var.blob_storage_backup : {}
+  name = "blob-backup"
+  location = var.location
+  vault_id = each.value.backup_vault_id
+  storage_account_id = azurerm_storage_account.this.id
+  backup_policy_id = each.value.backup_policy_id
+
+  depends_on = [azurerm_role_assignment.example]
 }
