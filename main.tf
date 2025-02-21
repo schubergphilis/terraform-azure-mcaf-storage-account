@@ -176,14 +176,14 @@ resource "azurerm_role_assignment" "cmk" {
 }
 
 resource "azurerm_storage_account_local_user" "self" {
-  count              = var.sftp_enabled != false && var.sftp_enabled == true ? 1 : 0
-  name               = var.sftp_local_user_config.name
+  count              = var.sftp_enabled != false && var.sftp_enabled == true ? length(var.sftp_local_user_config) : 0
+  name               = var.sftp_local_user_config[count.index].name
   storage_account_id = azurerm_storage_account.this.id
   ssh_key_enabled    = true
-  home_directory     = var.sftp_local_user_config.home_directory
+  home_directory     = var.sftp_local_user_config[count.index].home_directory
 
   dynamic "ssh_authorized_key" {
-    for_each = var.sftp_local_user_config.ssh_authorized_keys
+    for_each = var.sftp_local_user_config[count.index].ssh_authorized_keys
     content {
       description = ssh_authorized_key.value.description
       key         = ssh_authorized_key.value.key
@@ -191,7 +191,7 @@ resource "azurerm_storage_account_local_user" "self" {
   }
 
   dynamic "permission_scope" {
-    for_each = var.sftp_local_user_config.permission_scopes
+    for_each = var.sftp_local_user_config[count.index].permission_scopes
     content {
       service       = permission_scope.value.service
       resource_name = permission_scope.value.resource_name
