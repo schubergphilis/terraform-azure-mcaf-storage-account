@@ -189,7 +189,7 @@ variable "network_configuration" {
 variable "blob_storage_backup" {
   description = "blob storage backup policy settings for the storage account. Defaults to null which does not set any blob storage backup policy"
   type = object({
-    backup_vault_id = string
+    backup_vault_id  = string
     backup_policy_id = string
   })
   default = null
