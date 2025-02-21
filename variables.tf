@@ -237,7 +237,7 @@ variable "sftp_local_user_config" {
   }
   EOF
 
-  type = object({
+  type = list(object({
     name           = string
     home_directory = string
     ssh_authorized_keys = list(object({
@@ -255,6 +255,6 @@ variable "sftp_local_user_config" {
         write  = bool
       })
     })))
-  })
+  }))
   default = null
 }
