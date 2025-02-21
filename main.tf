@@ -177,14 +177,18 @@ resource "azurerm_role_assignment" "cmk" {
 
 resource "azurerm_storage_account_local_user" "this" {
   for_each             = { for user in var.local_users : user.username => user }
-  
+    
   name                 = each.value.username
   storage_account_id   = azurerm_storage_account.this.id
   ssh_key_enabled      = true
   ssh_password_enabled = false
 
-  ssh_authorized_key {
-    key = each.value.ssh_key
-    description = "SSH Key for ${each.value.username}"
+  dynamic "ssh_authorized_key" {
+    for_each = each.value.ssh_authorized_keys
+
+    content {
+      key         = ssh_authorized_key.value.key
+      description = ssh_authorized_key.value.description
+    }
   }
 }

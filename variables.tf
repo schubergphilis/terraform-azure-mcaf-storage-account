@@ -195,7 +195,6 @@ variable "network_configuration" {
 variable "local_users" {
   type = list(object({
     username = string
-    ssh_key  = string
     ssh_authorized_keys = list(object({
       key         = string
       description = string
