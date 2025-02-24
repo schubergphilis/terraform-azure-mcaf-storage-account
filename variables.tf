@@ -267,3 +267,4 @@ variable "sftp_local_user_config" {
     })))
   }))
   default = null
+}
