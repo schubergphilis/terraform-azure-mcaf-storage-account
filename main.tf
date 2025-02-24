@@ -139,13 +139,13 @@ resource "azurerm_storage_share" "this" {
   quota              = each.value.quota
 }
 
-resource "azurerm_role_assignment" "blob_owner" {
+resource "azurerm_role_assignment" "this" {
   scope                = azurerm_storage_account.this.id
   role_definition_name = "Storage Blob Data Owner"
   principal_id         = data.azurerm_client_config.current.object_id
 }
 
-resource "azurerm_role_assignment" "blob_contributor" {
+resource "azurerm_role_assignment" "extra" {
   for_each = { for idx, val in var.contributors : idx => val }
 
   scope                = azurerm_storage_account.this.id
