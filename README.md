@@ -23,6 +23,7 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [azurerm_data_protection_backup_instance_blob_storage.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/data_protection_backup_instance_blob_storage) | resource |
 | [azurerm_role_assignment.cmk](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.extra](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
@@ -46,6 +47,7 @@ No modules.
 | <a name="input_account_replication_type"></a> [account\_replication\_type](#input\_account\_replication\_type) | Type of replication to use for this storage account. Valid options are LRS, GRS, RAGRS, ZRS, GZRS, and RA\_GZRS. Defaults to ZRS. | `string` | `"ZRS"` | no |
 | <a name="input_account_tier"></a> [account\_tier](#input\_account\_tier) | Tier to use for this storage account. Valid options are Standard and Premium. Defaults to Standard. | `string` | `"Standard"` | no |
 | <a name="input_allowed_copy_scope"></a> [allowed\_copy\_scope](#input\_allowed\_copy\_scope) | Restrict copy scope for the storage account, valid values are 'Unrestricted', 'AAD' and 'PrivateLink'. Defaults to 'PrivateLink'. Unrestricted matches Azure Default of 'null'. | `string` | `"PrivateLink"` | no |
+| <a name="input_blob_storage_backup"></a> [blob\_storage\_backup](#input\_blob\_storage\_backup) | blob storage backup policy settings for the storage account. Defaults to null which does not set any blob storage backup policy | <pre>object({<br>    name             = optional(string, null)<br>    backup_vault_id  = optional(string, null)<br>    backup_policy_id = optional(string, null)<br>  })</pre> | `{}` | no |
 | <a name="input_change_feed_enabled"></a> [change\_feed\_enabled](#input\_change\_feed\_enabled) | Enable or Disable change feed events for the storage account. Defaults to true. | `bool` | `true` | no |
 | <a name="input_cmk_key_name"></a> [cmk\_key\_name](#input\_cmk\_key\_name) | Name of the Key (within the cmk\_key\_vault\_id) to use as the Customer Managed Key | `string` | `null` | no |
 | <a name="input_cmk_key_vault_id"></a> [cmk\_key\_vault\_id](#input\_cmk\_key\_vault\_id) | ID of the Key Vault to use for the Customer Managed Key | `string` | `null` | no |
