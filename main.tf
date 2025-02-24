@@ -176,7 +176,7 @@ resource "azurerm_role_assignment" "cmk" {
 
 resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
   for_each           = var.blob_storage_backup != null ? var.blob_storage_backup : {}
-  name               = "blob-backup"
+  name               = var.blob_storage_backup.name
   location           = var.location
   vault_id           = each.value.backup_vault_id
   storage_account_id = azurerm_storage_account.this.id
