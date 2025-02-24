@@ -193,5 +193,5 @@ variable "blob_storage_backup" {
     backup_vault_id  = string
     backup_policy_id = string
   })
-  default = null
+  default = {}
 }
