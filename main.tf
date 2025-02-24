@@ -17,6 +17,7 @@ resource "azurerm_storage_account" "this" {
   cross_tenant_replication_enabled  = var.cross_tenant_replication_enabled
   allowed_copy_scope                = var.allowed_copy_scope == "Unrestricted" ? null : var.allowed_copy_scope
   sftp_enabled                      = var.sftp_enabled
+  is_hns_enabled                    = var.is_hns_enabled
   allow_nested_items_to_be_public   = var.network_configuration.allow_nested_items_to_be_public
   queue_encryption_key_type         = (var.enable_cmk_encryption || var.cmk_key_vault_id != null) ? "Account" : "Service"
   table_encryption_key_type         = (var.enable_cmk_encryption || var.cmk_key_vault_id != null) ? "Account" : "Service"
@@ -181,4 +182,35 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
   vault_id           = each.value.backup_vault_id
   storage_account_id = azurerm_storage_account.this.id
   backup_policy_id   = each.value.backup_policy_id
+}
+
+resource "azurerm_storage_account_local_user" "self" {
+  count              = var.sftp_enabled != false && var.sftp_enabled == true ? length(var.sftp_local_user_config) : 0
+  name               = var.sftp_local_user_config[count.index].name
+  storage_account_id = azurerm_storage_account.this.id
+  ssh_key_enabled    = true
+  home_directory     = var.sftp_local_user_config[count.index].home_directory
+
+  dynamic "ssh_authorized_key" {
+    for_each = var.sftp_local_user_config[count.index].ssh_authorized_keys
+    content {
+      description = ssh_authorized_key.value.description
+      key         = ssh_authorized_key.value.key
+    }
+  }
+
+  dynamic "permission_scope" {
+    for_each = var.sftp_local_user_config[count.index].permission_scopes
+    content {
+      service       = permission_scope.value.service
+      resource_name = permission_scope.value.resource_name
+      permissions {
+        read   = permission_scope.value.permissions.read
+        create = permission_scope.value.permissions.create
+        delete = permission_scope.value.permissions.delete
+        list   = permission_scope.value.permissions.list
+        write  = permission_scope.value.permissions.write
+      }
+    }
+  }
 }

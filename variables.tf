@@ -87,6 +87,12 @@ variable "sftp_enabled" {
   description = "Allow or disallow SFTP access to this storage account. Defaults to false."
 }
 
+variable "is_hns_enabled" {
+  type        = bool
+  default     = false
+  description = "(Optional) Enables Hierarchical Namespace for this storage account."
+}
+
 variable "system_assigned_identity_enabled" {
   type        = bool
   default     = true
@@ -194,4 +200,71 @@ variable "blob_storage_backup" {
     backup_policy_id = optional(string, null)
   })
   default = {}
+}
+
+variable "sftp_local_user_config" {
+  description = <<-EOF
+    (Optional) Configuration for the local user identity in the Azure Storage Account for SFTP.
+
+    For example:
+    name            = "sasftpuser01"
+    ssh_key_enabled = true
+    home_directory  = "/home/sasftpuser01"
+    ssh_authorized_keys = [
+      {
+        description = "Public key of local user identity 01"
+        key         = "ssh-rsa"
+      },
+      {
+        description = "Public key of local user identity 02"
+        key         = "ssh-rsa"
+      }
+    ]
+    permission_scopes = [
+      {
+        service       = "blob"
+        resource_name = "container01"
+        permissions = {
+          read   = true
+          create = true
+          delete = true
+          list   = true
+          write  = true
+        }
+      },
+      {
+        service       = "blob"
+        resource_name = "container02"
+        permissions = {
+          read   = true
+          create = true
+          delete = true
+          list   = true
+          write  = true
+        }
+      }
+    ]
+  }
+  EOF
+
+  type = list(object({
+    name           = string
+    home_directory = optional(string, "")
+    ssh_authorized_keys = list(object({
+      description = string
+      key         = string
+    }))
+    permission_scopes = optional(list(object({
+      service       = string
+      resource_name = string
+      permissions = object({
+        read   = bool
+        create = bool
+        delete = bool
+        list   = bool
+        write  = bool
+      })
+    })))
+  }))
+  default = null
 }
