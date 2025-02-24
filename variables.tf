@@ -192,6 +192,16 @@ variable "network_configuration" {
   default = {}
 }
 
+variable "blob_storage_backup" {
+  description = "blob storage backup policy settings for the storage account. Defaults to null which does not set any blob storage backup policy"
+  type = object({
+    name             = optional(string, null)
+    backup_vault_id  = optional(string, null)
+    backup_policy_id = optional(string, null)
+  })
+  default = {}
+}
+
 variable "sftp_local_user_config" {
   description = <<-EOF
     (Optional) Configuration for the local user identity in the Azure Storage Account for SFTP.
@@ -257,4 +267,3 @@ variable "sftp_local_user_config" {
     })))
   }))
   default = null
-}
