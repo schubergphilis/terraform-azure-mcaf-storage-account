@@ -198,7 +198,7 @@ variable "blob_storage_backup" {
     name             = optional(string, null)
     backup_vault_id  = optional(string, null)
     backup_policy_id = optional(string, null)
-    containers       = optional(list(string), null) # If the backup policy type is "Vaulted" you need to list each individual container you want to backup
+    containers_names = optional(list(string), null) # If the backup policy type is "Vaulted" you need to list each individual container you want to backup
   }))
   default = {}
 }
