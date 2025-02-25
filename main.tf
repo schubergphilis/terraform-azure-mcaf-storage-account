@@ -187,7 +187,7 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
     for_each = each.value.container_names == null ? [] : [each.value.container_names]
 
     content {
-      container_name = storage_account_container_names.value
+      storage_account_container_names = storage_account_container_names.value
     }
   }
 }
