@@ -182,6 +182,14 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
   vault_id           = each.value.backup_vault_id
   storage_account_id = azurerm_storage_account.this.id
   backup_policy_id   = each.value.backup_policy_id
+
+  dynamic "storage_account_container_names" {
+    for_each = each.value.container_names == null ? [] : [each.value.container_names]
+
+    content {
+      container_name = storage_account_container_names.value
+    }
+  }
 }
 
 resource "azurerm_storage_account_local_user" "self" {
