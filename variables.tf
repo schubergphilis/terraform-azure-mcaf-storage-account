@@ -200,7 +200,7 @@ variable "blob_storage_backup" {
     backup_policy_id = optional(string, null)
     container_names  = optional(list(string), null) # If the backup policy type is "Vaulted" you need to list each individual container you want to backup
   })
-  default = {}
+  default = null
 }
 
 variable "sftp_local_user_config" {
