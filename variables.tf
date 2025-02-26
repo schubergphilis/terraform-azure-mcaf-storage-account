@@ -193,14 +193,14 @@ variable "network_configuration" {
 }
 
 variable "blob_storage_backup" {
-  description = "Map of blob storage backup policy settings for the storage account. Defaults to an empty map which does not set any blob storage backup policy."
-  type = map(object({
+  description = "Blob storage backup policy settings for the storage account. Defaults to null which does not set any blob storage backup policy."
+  type = object({
     name             = optional(string, null)
     backup_vault_id  = optional(string, null)
     backup_policy_id = optional(string, null)
-    containers_names = optional(list(string), null) # If the backup policy type is "Vaulted" you need to list each individual container you want to backup
-  }))
-  default = {}
+    container_names  = optional(list(string), null) # If the backup policy type is "Vaulted" you need to list each individual container you want to backup
+  })
+  default = null
 }
 
 variable "sftp_local_user_config" {
