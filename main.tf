@@ -176,27 +176,14 @@ resource "azurerm_role_assignment" "cmk" {
 }
 
 resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
-  count = var.blob_storage_backup != null ? 1 : 0
-  name = var.blob_storage_backup.name
-  location = var.location
-  vault_id = var.blob_storage_backup.backup_vault_id
-  storage_account_id = azurerm_storage_account.this.id
-  backup_policy_id = var.blob_storage_backup.backup_policy_id
+  count                           = var.blob_storage_backup != null ? 1 : 0
+  name                            = var.blob_storage_backup.name
+  location                        = var.location
+  vault_id                        = var.blob_storage_backup.backup_vault_id
+  storage_account_id              = azurerm_storage_account.this.id
+  backup_policy_id                = var.blob_storage_backup.backup_policy_id
   storage_account_container_names = var.blob_storage_backup.container_names
 }
-
-
-/*
-resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
-  for_each                        = var.blob_storage_backup
-  name                            = each.value.name
-  location                        = var.location
-  vault_id                        = each.value.backup_vault_id
-  storage_account_id              = azurerm_storage_account.this.id
-  backup_policy_id                = each.value.backup_policy_id
-  storage_account_container_names = each.value.container_names
-}
-*/
 
 resource "azurerm_storage_account_local_user" "self" {
   count              = var.sftp_enabled != false && var.sftp_enabled == true ? length(var.sftp_local_user_config) : 0
