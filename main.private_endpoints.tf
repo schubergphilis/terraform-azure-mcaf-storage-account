@@ -9,7 +9,7 @@ resource "azurerm_private_endpoint" "managed" {
 
   private_service_connection {
     is_manual_connection           = false
-    name                           = "${module.naming["intb"].naming["databases"].redis_cache}-redis-psc"
+    name                           = coalesce(each.value.private_service_connection_name, "${coalesce(each.value.name, each.key)}-psc")
     subresource_names              = [each.value.subresource_name]
     private_connection_resource_id = azurerm_storage_account.this.id
   }
