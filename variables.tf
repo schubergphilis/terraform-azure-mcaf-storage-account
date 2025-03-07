@@ -269,3 +269,41 @@ variable "sftp_local_user_config" {
   }))
   default = null
 }
+
+variable "deploy_private_endpoints" {
+  type = object({
+    blob = optional(object({
+      subnet_id                       = string
+      name                            = optional(string, null)
+      private_dns_zone_ids            = optional(set(string), null)
+      private_ip_address              = optional(string, null)
+      private_service_connection_name = optional(string, null)
+    }), null)
+    queue = optional(object({
+      subnet_id                       = string
+      name                            = optional(string, null)
+      private_dns_zone_ids            = optional(set(string), null)
+      private_ip_address              = optional(string, null)
+      private_service_connection_name = optional(string, null)
+    }), null)
+    file = optional(object({
+      subnet_id                       = string
+      name                            = optional(string, null)
+      private_dns_zone_ids            = optional(set(string), null)
+      private_ip_address              = optional(string, null)
+      private_service_connection_name = optional(string, null)
+    }), null)
+    table = optional(object({
+      subnet_id                       = string
+      name                            = optional(string, null)
+      private_dns_zone_ids            = optional(set(string), null)
+      private_ip_address              = optional(string, null)
+      private_service_connection_name = optional(string, null)
+    }), null)
+    private_endpoints_manage_dns_zone_group = optional(bool, true)
+    resource_group                          = optional(string, null)
+  })
+  default = {}
+
+  description = "configuration for private endpoints. Defaults to an empty object which does not create any private endpoints."
+}

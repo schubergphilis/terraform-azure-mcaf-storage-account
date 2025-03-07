@@ -53,11 +53,11 @@ resource "azurerm_storage_account" "this" {
   }
 
   dynamic "share_properties" {
-    for_each = var.share_properties == null ? [] : [var.share_properties]
+    for_each = var.share_properties != null ? [var.share_properties] : []
 
     content {
       dynamic "retention_policy" {
-        for_each = share_properties.value.retention_policy == null ? [] : [share_properties.value.retention_policy]
+        for_each = share_properties.value.retention_policy != null ? [share_properties.value.retention_policy] : []
 
         content {
           days = retention_policy.value.days
@@ -65,7 +65,7 @@ resource "azurerm_storage_account" "this" {
       }
 
       dynamic "smb" {
-        for_each = share_properties.value.smb == null ? [] : [share_properties.value.smb]
+        for_each = share_properties.value.smb != null ? [share_properties.value.smb] : []
 
         content {
           authentication_types            = smb.value.authentication_types
@@ -78,12 +78,7 @@ resource "azurerm_storage_account" "this" {
     }
   }
 
-  tags = merge(
-    try(var.tags),
-    tomap({
-      "Resource Type" = "Storage Account"
-    })
-  )
+  tags = merge(var.tags, { "Resource Type" = "Storage Account" })
 
   lifecycle {
     ignore_changes = [
@@ -186,7 +181,7 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
 }
 
 resource "azurerm_storage_account_local_user" "self" {
-  count              = var.sftp_enabled != false && var.sftp_enabled == true ? length(var.sftp_local_user_config) : 0
+  count              = var.sftp_enabled ? length(var.sftp_local_user_config) : 0
   name               = var.sftp_local_user_config[count.index].name
   storage_account_id = azurerm_storage_account.this.id
   ssh_key_enabled    = true
