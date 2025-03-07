@@ -301,9 +301,11 @@ variable "deploy_private_endpoints" {
       private_service_connection_name = optional(string, null)
     }), null)
     private_endpoints_manage_dns_zone_group = optional(bool, true)
-    resource_group                          = optional(string, null)
+    resource_group_name                     = optional(string, null)
   })
-  default = {}
+  default = {
+
+  }
 
   description = "configuration for private endpoints. Defaults to an empty object which does not create any private endpoints."
 }
