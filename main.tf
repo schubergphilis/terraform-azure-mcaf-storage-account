@@ -168,11 +168,11 @@ resource "azurerm_storage_account_customer_managed_key" "this" {
 }
 
 resource "azurerm_role_assignment" "cmk" {
-  for_each = var.cmk_key_vault_id != null && (local.identity_system_assigned != null || local.identity_system_assigned_user_assigned != null) ? [1] : []
+  for_each = var.cmk_key_vault_id != null && (local.identity_system_assigned != null || local.identity_system_assigned_user_assigned != null) ? { "cmk": 1 } : {}
 
   scope                = var.cmk_key_vault_id
   role_definition_name = "Key Vault Crypto Service Encryption User"
-  principal_id         = azurerm_storage_account.this.identity.principal_id
+  principal_id         = azurerm_storage_account.this.identity[0].principal_id
 }
 
 resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
