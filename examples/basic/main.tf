@@ -41,4 +41,17 @@ module "storage_account" {
       days = 30
     }
   }
+
+  azure_files_authentication = {
+    directory_type = "AD"
+    active_directory = {
+      domain_name         = "<domain-name>"
+      domain_guid         = "<domain-guid>"
+      domain_sid          = "<domain-sid>"
+      storage_sid         = "<storage-sid>"
+      forest_name         = "<forest-name>"
+      netbios_domain_name = "<netbios-domain-name>"
+    }
+    default_share_level_permission = "StorageFileDataSmbShareReader"
+  }
 }
