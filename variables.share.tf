@@ -105,3 +105,48 @@ DESCRIPTION
     error_message = "The quota must be less than or equal to 5120 for non-Premium tiers. For Premium tier, it must be between 100 and 102400."
   }
 }
+
+variable "azure_files_authentication" {
+  type = object({
+    directory_type = string
+    active_directory = object({
+      domain_name         = string
+      domain_guid         = string
+      domain_sid          = optional(string)
+      storage_sid         = optional(string)
+      forest_name         = optional(string)
+      netbios_domain_name = optional(string)
+    })
+    default_share_level_permission = optional(string)
+  })
+  default     = null
+  description = <<DESCRIPTION
+
+---
+- `directory_type` - Specifies the directory service used. Possible values are `AADDS`, `AD` and `AADKERB`.
+- `active_directory` - A `active_directory` block. Required when `directory_type` is `AD`.
+  - `domain_name` - Specifies the primary domain that the AD DNS server is authoritative for.
+  - `domain_guid` - Specifies the domain GUID.
+  - `domain_sid` - (Optional) Specifies the security identifier (SID). This is required when `directory_type` is set to `AD`.
+  - `storage_sid` - (Optional) Specifies the security identifier (SID) for Azure Storage. This is required when `directory_type` is set to `AD`.
+  - `forest_name` - (Optional) Specifies the Active Directory forest. This is required when `directory_type` is set to `AD`.
+  - `netbios_domain_name` -  (Optional) Specifies the NetBIOS domain name. This is required when `directory_type` is set to `AD`.
+- `default_share_level_permission` - (Optional) Specifies the default share level permissions applied to all users. Possible values are `StorageFileDataSmbShareReader`, `StorageFileDataSmbShareContributor`, `StorageFileDataSmbShareElevatedContributor`, or `None`.
+
+---
+```hcl
+  azure_files_authentication = {
+    directory_type = "AD"
+    active_directory = {
+      domain_name         = "<domain-name>"
+      domain_guid         = "<domain-guid>"
+      domain_sid          = "<domain-sid>"
+      storage_sid         = "<storage-sid>"
+      forest_name         = "<forest-name>"
+      netbios_domain_name = "<netbios-domain-name>"
+    }
+    default_share_level_permission = "StorageFileDataSmbShareReader"
+  }
+```
+DESCRIPTION
+}

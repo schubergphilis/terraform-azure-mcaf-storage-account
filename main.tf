@@ -78,6 +78,26 @@ resource "azurerm_storage_account" "this" {
     }
   }
 
+  dynamic "azure_files_authentication" {
+
+    for_each = var.azure_files_authentication != null ? { this = var.azure_files_authentication } : {}
+    content {
+      directory_type = azure_files_authentication.value.directory_type
+      dynamic "active_directory" {
+        for_each = azure_files_authentication.value.active_directory != null ? { this = azure_files_authentication.value.active_directory } : {}
+        content {
+          domain_name         = active_directory.value.domain_name
+          domain_guid         = active_directory.value.domain_guid
+          domain_sid          = active_directory.value.domain_sid
+          storage_sid         = active_directory.value.storage_sid
+          forest_name         = active_directory.value.forest_name
+          netbios_domain_name = active_directory.value.netbios_domain_name
+        }
+      }
+      default_share_level_permission = azure_files_authentication.value.default_share_level_permission
+    }
+  }
+
   tags = merge(
     try(var.tags),
     tomap({
