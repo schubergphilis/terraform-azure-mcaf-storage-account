@@ -82,6 +82,7 @@ No modules.
 | <a name="output_endpoints"></a> [endpoints](#output\_endpoints) | Endpoint information of the storage account |
 | <a name="output_id"></a> [id](#output\_id) | Resource Id of the storage account |
 | <a name="output_name"></a> [name](#output\_name) | Name of the storage account |
+| <a name="output_storage_share_ids"></a> [storage\_share\_ids](#output\_storage\_share\_ids) | Resource Manager IDs for each storage file share |
 | <a name="output_system_assigned_identity_id"></a> [system\_assigned\_identity\_id](#output\_system\_assigned\_identity\_id) | System assigned identity id of the storage account |
 <!-- END_TF_DOCS -->
 
